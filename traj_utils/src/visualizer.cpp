@@ -71,7 +71,7 @@ void Visualizer::visualizePolyTraj(const Eigen::Vector3d&        start_pos,
  * @param rviz_map_center_locked true if map center is locked
  * @param clear_corridors
  */
-void Visualizer::visualizeCorridors(const planner::Corridors& corridors,
+void Visualizer::visualizeCorridors(const traj_utils::Corridors& corridors,
                                     const Eigen::Vector3d&    map_pose) {
   displayCorridors(corridors, map_pose, _corridor_pub, _frame_id);
 }

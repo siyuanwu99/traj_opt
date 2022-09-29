@@ -36,7 +36,7 @@ typedef Eigen::MatrixX4d PolyhedronH;
 class BezierOpt {
  public:
   BezierOpt() {
-    N_ = ORDER;  // 4
+    N_ = Bernstein::ORDER;  // 4
     calcCtrlPtsCvtMat();
   }
   BezierOpt(const int& N) {

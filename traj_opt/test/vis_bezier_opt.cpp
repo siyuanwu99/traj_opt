@@ -26,9 +26,9 @@
 std::random_device                     rd;
 std::default_random_engine             eng(rd());
 std::uniform_real_distribution<double> _x_rand(-1.0, 1.0);
-std::uniform_real_distribution<double> _z_rand(0.0, 3.0);
-std::uniform_real_distribution<double> _v_rand(0.0, 5.0);
-std::uniform_real_distribution<double> _t_rand(2.0, 4.0);  // time interval
+std::uniform_real_distribution<double> _z_rand(0.0, 1.0);
+std::uniform_real_distribution<double> _v_rand(0.0, 2.0);
+std::uniform_real_distribution<double> _t_rand(2.0, 3.0);  // time interval
 
 Eigen::Vector3d _start_pos(0.0, 0.0, 0.0);
 Eigen::Vector3d _start_vel(0.0, 0.0, 0.0);
@@ -82,9 +82,9 @@ std::vector<Eigen::Vector3d> getRandomWaypoint(int                    n,
 
 std::vector<Eigen::Matrix<double, 6, -1>> getRandomCorridors(
     int n, const std::vector<Eigen::Vector3d> &wps) {
-  double          l_margin = 0.5;
-  double          w_margin = 3.0;
-  double          h        = 2.0;
+  double          l_margin = 0.2;
+  double          w_margin = 0.5;
+  double          h        = 0.7;
   Eigen::Vector3d up(0.0, 0.0, 1.0);
 
   std::vector<Eigen::Matrix<double, 6, -1>> crds;
@@ -123,7 +123,7 @@ std::vector<Eigen::Matrix<double, 6, -1>> getRandomCorridors(
  */
 void convertPolytopeRepresentation(const std::vector<Eigen::Matrix<double, 6, -1>> &c,
                                    std::vector<Eigen::MatrixX4d> &                  h) {
-  for (int i = 0; i < c.size(); i++) {
+  for (int i = 0; i < static_cast<int>(c.size()); i++) {
     Eigen::MatrixX4d h_i(6, 4);
     for (int j = 0; j < 6; j++) {
       Eigen::Vector3d dir, pos;

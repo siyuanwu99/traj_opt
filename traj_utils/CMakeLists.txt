@@ -25,6 +25,7 @@ add_message_files(
   PolyTraj.msg
   MINCOTraj.msg
   BsplineTraj.msg
+  BezierTraj.msg
   CentralPos.msg
   CentralState.msg
   MultiBsplines.msg
@@ -56,6 +57,7 @@ include_directories(
 
 add_library( traj_utils
     # src/planning_visualization.cpp 
+    src/corridor.cpp
     src/visualizer.cpp
     src/uniform_bspline.cpp
     src/bernstein.cpp

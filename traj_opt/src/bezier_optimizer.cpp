@@ -10,6 +10,7 @@
  */
 
 #include "bernstein/bezier_optimizer.hpp"
+using namespace Bernstein;
 
 namespace traj_opt {
 

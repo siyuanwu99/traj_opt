@@ -484,7 +484,7 @@ namespace ego_planner
     {
       // Search from back to head
       Eigen::Vector3d in(init_points.col(segment_ids[i].second)), out(init_points.col(segment_ids[i].first));
-      ASTAR_RET ret = a_star_->AstarSearch(/*(in-out).norm()/10+0.05*/ grid_map_->getResolution(), in, out);
+      ASTAR_RET ret = a_star_->search(/*(in-out).norm()/10+0.05*/ grid_map_->getResolution(), in, out);
       if (ret == ASTAR_RET::SUCCESS)
       {
         a_star_pathes.push_back(a_star_->getPath());
@@ -815,7 +815,7 @@ namespace ego_planner
       {
         /*** a star search ***/
         Eigen::Vector3d in(cps.points.col(segment_ids[i].second)), out(cps.points.col(segment_ids[i].first));
-        ASTAR_RET ret = a_star_->AstarSearch(/*(in-out).norm()/10+0.05*/ grid_map_->getResolution(), in, out);
+        ASTAR_RET ret = a_star_->search(/*(in-out).norm()/10+0.05*/ grid_map_->getResolution(), in, out);
         if (ret == ASTAR_RET::SUCCESS)
         {
           a_star_pathes.push_back(a_star_->getPath());

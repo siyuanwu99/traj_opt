@@ -18,10 +18,9 @@
 #include <memory>
 #include <vector>
 
+namespace Bernstein {
 const int ORDER = 4;  // order of Bezier curve, default 4
 const int DIM   = 3;  // dimension of the trajectory
-
-namespace Bernstein {
 
 class BernsteinPiece {
  private:
@@ -68,11 +67,11 @@ class BernsteinPiece {
     tf_ = tf;
     t_  = tf_ - t0_;
   }
-  inline int    getDim() { return DIM; }
-  inline int    getOrder() { return N_; }
-  inline double getStartTime() { return t0_; }
-  inline double getEndTime() { return tf_; }
-  inline double getDuration() { return tf_ - t0_; }
+  inline int    getDim() const { return DIM; }
+  inline int    getOrder() const { return N_; }
+  inline double getStartTime() const { return t0_; }
+  inline double getEndTime() const { return tf_; }
+  inline double getDuration() const { return tf_ - t0_; }
 
   Eigen::Vector3d getPos(double t) const;
   Eigen::Vector3d getVel(double t) const;
@@ -100,7 +99,7 @@ class Bezier {
  private:
   typedef std::vector<BernsteinPiece> Pieces;
   Pieces                              pieces_;
-  Eigen::MatrixX3d                     cpts_;  // control points
+  Eigen::MatrixX3d                    cpts_;  // control points, (M(N+1))x3 matrix
   int                                 N_;     // order
   int                                 M_;     // number of pieces
   double                              T_;     // total time
@@ -136,16 +135,30 @@ class Bezier {
 
   /* get & set basic info */
   void setOrder(const int &order) { N_ = order; }
-  void setTime(const std::vector<double> &t) { t_ = t; }
+  void setTime(const std::vector<double> &t) {
+    t_ = t;
+    M_ = t_.size();
+    T_ = 0;
+    for (auto it = t_.begin(); it != t_.end(); it++) {
+      T_ += *it;
+    }
+  }
   void setControlPoints(const Eigen::MatrixX3d &cpts);
 
-  int    getOrder() const { return N_; }
-  int    getNumPieces() const { return M_; }
-  double getDuration() const { return T_; }
-  void   getCtrlPoints(Eigen::MatrixXd &cpts) const { cpts = cpts_; }
+  int             getOrder() const { return N_; }
+  int             getNumPieces() const { return M_; }
+  double          getDuration() const { return T_; }
+  void            getCtrlPoints(Eigen::MatrixXd &cpts) const { cpts = cpts_; }
   Eigen::MatrixXd getVelCtrlPoints(int idx) const { return pieces_[idx].getVelCtrlPts(); }
   Eigen::MatrixXd getAccCtrlPoints(int idx) const { return pieces_[idx].getAccCtrlPts(); }
-  void   calcPieces();
+  void            calcPieces();
+  void            clear() {
+    t_.clear();
+    pieces_.clear();
+    cpts_.resize(0, 3);
+    T_ = 0;
+    M_ = 0;
+  }
 
   inline int locatePiece(double t) const {
     for (int i = 0; i < M_; i++) {

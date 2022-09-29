@@ -1,12 +1,12 @@
 /**
  * @file mini_snap_utils.hpp
  * @author Siyuan Wu (siyuanwu99@gmail.com)
- * @brief 
+ * @brief
  * @version 1.0
  * @date 2022-08-05
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #ifndef _MINI_SNAP_UTILS_H_
@@ -16,19 +16,21 @@
 
 #include <Eigen/Eigen>
 #include <cmath>
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "root_finder.hpp"
 
-
-
-#define ORDER       7  // order of polynomial trajectory
-#define D_ORDER     4  // order of maximum derivative (4 for minisnap)
-#define DIM         3  // number of dimensions in Cspace
-#define N_POLYHEDRA 6  // number of polygons in polyhedra
+// #define ORDER       7  // order of polynomial trajectory
+// #define D_ORDER     4  // order of maximum derivative (4 for minisnap)
+// #define DIM         3  // number of dimensions in Cspace
+// #define N_POLYHEDRA 6  // number of polygons in polyhedra
 
 namespace polynomial {
+const int ORDER       = 7;  // order of polynomial trajectory
+const int D_ORDER     = 4;  // order of maximum derivative (4 for minisnap)
+const int DIM         = 3;  // number of dimensions in Cspace
+const int N_POLYHEDRA = 6;  // number of polygons in polyhedra
 
 typedef Eigen::Matrix<double, DIM, ORDER + 1> CoefficientMat;
 typedef Eigen::SparseMatrix<double>           SparMat;
@@ -215,8 +217,8 @@ class PolyPiece {
 class Trajectory {
  private:
   typedef std::vector<PolyPiece> Pieces;
-  Pieces                     _pieces;
-  int                        _n_pieces;
+  Pieces                         _pieces;
+  int                            _n_pieces;
 
  public:
   typedef std::shared_ptr<Trajectory> Ptr;
@@ -342,6 +344,6 @@ class Trajectory {
   PolyPiece&       operator[](int i) { return _pieces[i]; }
 };
 
-} // namespace minisnap
+}  // namespace polynomial
 
 #endif  // MINISNAP_UTILS_H_

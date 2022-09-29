@@ -173,7 +173,7 @@ inline void displayBezierCurve(const Eigen::Vector3d&   start_pos,
   traj_pub.publish(traj_marker);
 }
 
-inline void displayCorridors(const planner::Corridors& corridors,
+inline void displayCorridors(const traj_utils::Corridors& corridors,
                              const Eigen::Vector3d&    map_pose,
                              const ros::Publisher&     crd_pub,
                              const std::string         frame_id = "world") {
@@ -227,7 +227,7 @@ class Visualizer {
   void visualizePolyTraj(const Eigen::Vector3d&        start_pos,
                          const polynomial::Trajectory& traj,
                          double                        max_vel);
-  void visualizeCorridors(const planner::Corridors& corridors, const Eigen::Vector3d& map_pose);
+  void visualizeCorridors(const traj_utils::Corridors& corridors, const Eigen::Vector3d& map_pose);
   void visualizeCorridors(const std::vector<Eigen::MatrixX4d>& corridors,
                           const Eigen::Vector3d&               map_pose);
   void visualizePath(const std::vector<Eigen::Vector3d>& path);
