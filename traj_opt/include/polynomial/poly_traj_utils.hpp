@@ -1,6 +1,6 @@
 #pragma once
 
-#include <traj_utils/root_finder.hpp>
+#include <root_finder.hpp>
 
 #include <iostream>
 #include <cmath>

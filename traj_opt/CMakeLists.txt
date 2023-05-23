@@ -4,22 +4,22 @@ project(traj_opt)
 set(CMAKE_BUILD_TYPE "Release")
 ADD_COMPILE_OPTIONS(-std=c++11)
 ADD_COMPILE_OPTIONS(-std=c++14)
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -fPIC")
 
 find_package(Eigen3 REQUIRED)
 find_package(PCL 1.7 REQUIRED)
 find_package(osqp REQUIRED)
+find_package(ompl REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
-    rospy
     std_msgs
     visualization_msgs
-    # plan_env
-    cv_bridge
+    geometry_msgs
+    sensor_msgs
     traj_utils
     # path_searching
-    geometry_msgs
+    # plan_env
 )
 
 catkin_package(
@@ -36,6 +36,7 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
     ${Eigen3_INCLUDE_DIRS}
     ${PCL_INCLUDE_DIRS}
+    ${OMPL_INCLUDE_DIRS}
 )
 
 add_library(traj_opt
@@ -58,6 +59,13 @@ target_link_libraries(vis_minisnap
 add_executable(vis_bezier_opt test/vis_bezier_opt.cpp)
 target_link_libraries(vis_bezier_opt
     ${catkin_LIBRARIES}
+    traj_opt
+)
+
+add_executable(minco_node src/minco_node.cpp)
+target_link_libraries(minco_node
+    ${catkin_LIBRARIES}
+    ${OMPL_LIBRARIES}
     traj_opt
 )
 
